@@ -25,7 +25,7 @@ RUN dotnet tool restore --tool-manifest ./.config/dotnet-tools.json
 COPY paket.dependencies paket.dependencies
 COPY paket.lock paket.lock
 COPY .paket .paket
-
+COPY Directory.Build.props Directory.Build.props
 
 COPY build.sh build.sh
 COPY build.fsx build.fsx

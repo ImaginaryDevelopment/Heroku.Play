@@ -6,6 +6,10 @@
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
     <PropertyGroup>
+        <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+        <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">12.0</VisualStudioVersion>
+    </PropertyGroup>
+    <PropertyGroup>
         <Title>Heroku.Play</Title>
         <Description>Heroku.Play does the thing!</Description>
     </PropertyGroup>
@@ -18,5 +22,5 @@
         <None Include="App.config" />
         <Compile Include="Main.fs" />
     </ItemGroup>
-    <Import Project="..\..\.paket\Paket.Restore.targets" />
+    <Import Project="../../.paket/Paket.Restore.targets" />
 </Project>

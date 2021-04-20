@@ -22,7 +22,7 @@ BuildServer.install [
     GitHubActions.Installer
 ]
 
-let environVarAsBoolOrDefault varName defaultValue =
+let environVarAsBoolOrDefault (varName:string) defaultValue =
     let truthyConsts = [
         "1"
         "Y"
@@ -31,7 +31,7 @@ let environVarAsBoolOrDefault varName defaultValue =
         "TRUE"
     ]
     try
-        let envvar = (Environment.environVar varName).ToUpper()
+        let envvar = (varName.ToUpper() |> Environment.environVar).ToUpper()
         truthyConsts |> List.exists((=)envvar)
     with
     | _ ->  defaultValue
@@ -40,6 +40,7 @@ let environVarAsBoolOrDefault varName defaultValue =
 // Metadata and Configuration
 //-----------------------------------------------------------------------------
 
+let buildingInDocker = environVarAsBoolOrDefault "InDocker" false
 let productName = "Heroku.Play"
 let sln = "Heroku.Play.sln"
 
@@ -567,7 +568,7 @@ let formatCode _ =
 //-----------------------------------------------------------------------------
 // Target Declaration
 //-----------------------------------------------------------------------------
-
+Target.create "NoOp" ignore
 Target.create "Clean" clean
 Target.create "DotnetRestore" dotnetRestore
 Target.create "UpdateChangelog" updateChangelog
@@ -609,7 +610,11 @@ Target.create "Release" ignore
 
 "DotnetRestore"
     ==> "DotnetBuild"
-    ==> "FSharpAnalyzers"
+    ==> (
+        if not buildingInDocker then
+            "FSharpAnalyzers"
+        else "NoOp"
+    )
     ==> "DotnetTest"
     =?> ("GenerateCoverageReport", not disableCodeCoverage)
     ==> "CreatePackages"

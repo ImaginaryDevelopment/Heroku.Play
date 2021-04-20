@@ -29,6 +29,7 @@ COPY Directory.Build.props Directory.Build.props
 
 COPY build.sh build.sh
 COPY build.fsx build.fsx
+COPY Directory.Build.props Directory.Build.props
 
 RUN dotnet paket restore
 
@@ -43,11 +44,12 @@ COPY ./tests ./tests
 COPY Heroku.Play.sln ./
 COPY CHANGELOG.md CHANGELOG.md
 
-RUN dotnet fake build release
 ENV FAKE_DETAILED_ERRORS true
+ENV INDOCKER=true
+RUN dotnet fake build release
 
 
-WORKDIR /code/app/src/Heroku.Play/
+# WORKDIR /code/app/src/Heroku.Play/
 
 # RUN dotnet restore Heroku.Play.fsproj
 

@@ -56,7 +56,7 @@ RUN dotnet fake build release
 # Copy everything else and build
 # COPY . .
 
-# RUN dotnet publish -c Release -o /code/app/out
+RUN dotnet publish -c Release -o /code/app/out
 # RUN dotnet publish -c Release
 
 # Build runtime image

@@ -90,7 +90,7 @@ let mutable latestEntry =
 let mutable linkReferenceForLatestEntry = ""
 let mutable changelogBackupFilename = ""
 
-let targetFramework =  "net5.0"
+let targetFramework = "net5.0"
 
 // RuntimeIdentifiers: https://docs.microsoft.com/en-us/dotnet/core/rid-catalog
 // dotnet-packaging Tasks: https://github.com/qmfrederik/dotnet-packaging/blob/0c8e063ada5ba0de2b194cd3fad8308671b48092/Packaging.Targets/build/Packaging.Targets.targets
@@ -460,17 +460,17 @@ let generateAssemblyInfo _ =
         | Some pr -> pr.Name
         | _ -> "release"
     let getAssemblyInfoAttributes projectName =
-        [ AssemblyInfo.Title (projectName)
-          AssemblyInfo.Product productName
-          AssemblyInfo.Version latestEntry.AssemblyVersion
-          AssemblyInfo.Metadata("ReleaseDate", latestEntry.Date.Value.ToString("o"))
-          AssemblyInfo.FileVersion latestEntry.AssemblyVersion
-          AssemblyInfo.InformationalVersion latestEntry.AssemblyVersion
-          AssemblyInfo.Metadata("ReleaseChannel", releaseChannel)
-          AssemblyInfo.Metadata("GitHash", Git.Information.getCurrentSHA1(null))
+        [   AssemblyInfo.Title (projectName)
+            AssemblyInfo.Product productName
+            AssemblyInfo.Version latestEntry.AssemblyVersion
+            AssemblyInfo.Metadata("ReleaseDate", latestEntry.Date.Value.ToString("o"))
+            AssemblyInfo.FileVersion latestEntry.AssemblyVersion
+            AssemblyInfo.InformationalVersion latestEntry.AssemblyVersion
+            AssemblyInfo.Metadata("ReleaseChannel", releaseChannel)
+            AssemblyInfo.Metadata("GitHash", Git.Information.getCurrentSHA1(null))
         ]
 
-    let getProjectDetails projectPath =
+    let getProjectDetails (projectPath:string) =
         let projectName = IO.Path.GetFileNameWithoutExtension(projectPath)
         (
             projectPath,

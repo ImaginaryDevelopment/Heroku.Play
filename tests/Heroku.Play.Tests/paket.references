@@ -1,5 +1,7 @@
+group Tests
 Expecto
 FSharp.Core
 Microsoft.NET.Test.Sdk
 YoloDev.Expecto.TestSdk
 altcover
+MsBuild.StructuredLogger
